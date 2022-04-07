@@ -1,0 +1,16 @@
+POST http://localhost:3000/email/send HTTP/1.1
+content-type: application/json
+
+{
+    "sender":"kingscorpsoft@gmail.com",
+    "receipient":"kambangsinclaire@gmail.com"
+}
+
+###
+POST http://localhost:3000/notification/push/send HTTP/1.1
+content-type: application/json
+
+{
+    "sender":"kingscorpsoft@gmail.com",
+    "receipient":"kambangsinclaire@gmail.com"
+}
