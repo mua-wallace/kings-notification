@@ -1,21 +1,24 @@
-import { Injectable } from '@nestjs/common';
-// import * as nodemailer from "nodemailer";
-import * as AWS from 'aws-sdk';
-import { INotification } from 'src/models/interfaces/notification.interface';
-
-@Injectable()
-export class EmailService {
-
-  async sendEmail(payload: INotification) {
-
-    AWS.config.update({
-      region: "us-east-2" ?? process.env.AWS_REGION,
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "AKIAY5SJE64ENF7CKCFR",
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "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",
-    });
-
-    if (!payload.message) {
-      payload.message = `<!DOCTYPE html>
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmailService = void 0;
+const common_1 = require("@nestjs/common");
+const AWS = require("aws-sdk");
+let EmailService = class EmailService {
+    async sendEmail(payload) {
+        var _a, _b, _c;
+        AWS.config.update({
+            region: "us-east-2" !== null && "us-east-2" !== void 0 ? "us-east-2" : process.env.AWS_REGION,
+            accessKeyId: (_a = process.env.AWS_ACCESS_KEY_ID) !== null && _a !== void 0 ? _a : "AKIAY5SJE64ENF7CKCFR",
+            secretAccessKey: (_b = process.env.AWS_SECRET_ACCESS_KEY) !== null && _b !== void 0 ? _b : "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",
+        });
+        if (!payload.message) {
+            payload.message = `<!DOCTYPE html>
       <html lang="en">
           <head>
               <meta charset="UTF-8">
@@ -69,43 +72,44 @@ export class EmailService {
               </div>
       
           </body>
-      </html>`
-    }
-
-    // setup email params 
-    var params = {
-      Destination: {
-        CcAddresses: [
-          payload.receipient.email
-        ],
-        ToAddresses: [
-          payload.receipient.email
-        ]
-      },
-      Message: {
-        Body: {
-          Html: {
-            Charset: "UTF-8",
-            Data: payload.message
-          },
-          Text: {
-            Charset: "UTF-8",
-            Data: "TEXT_FORMAT_BODY"
-          }
-        },
-        Subject: {
-          Charset: 'UTF-8',
-          Data: payload.subject ?? payload.title
+      </html>`;
         }
-      },
-      Source: payload.sender.email,
-      ReplyToAddresses: [
-        payload.sender.email
-      ],
-    };
-
-    let sendPromise = await new AWS.SES({ apiVersion: '2010-12-01' }).sendEmail(params).promise();
-
-    return sendPromise
-  }
-}
+        var params = {
+            Destination: {
+                CcAddresses: [
+                    payload.receipient.email
+                ],
+                ToAddresses: [
+                    payload.receipient.email
+                ]
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: payload.message
+                    },
+                    Text: {
+                        Charset: "UTF-8",
+                        Data: "TEXT_FORMAT_BODY"
+                    }
+                },
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: (_c = payload.subject) !== null && _c !== void 0 ? _c : payload.title
+                }
+            },
+            Source: payload.sender.email,
+            ReplyToAddresses: [
+                payload.sender.email
+            ],
+        };
+        let sendPromise = await new AWS.SES({ apiVersion: '2010-12-01' }).sendEmail(params).promise();
+        return sendPromise;
+    }
+};
+EmailService = __decorate([
+    (0, common_1.Injectable)()
+], EmailService);
+exports.EmailService = EmailService;
+//# sourceMappingURL=email.service.js.map
