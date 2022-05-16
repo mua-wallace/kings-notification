@@ -9,9 +9,9 @@ export class EmailService {
   async sendEmail(payload: INotification) {
 
     AWS.config.update({
-      region: "us-east-2" ?? process.env.AWS_REGION,
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "AKIAY5SJE64ENF7CKCFR",
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "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",
+      region: process.env.AWS_REGION ?? "us-east-2",
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
     });
 
     if (!payload.message) {
